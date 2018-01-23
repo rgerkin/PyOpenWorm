@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import PyOpenWorm as P
+from itertools import chain
 
 from PyOpenWorm.dataObject import DataObject
 
@@ -51,8 +52,11 @@ class Network(DataObject):
             set(['VB4', 'PDEL', 'HSNL', 'SIBDR', ... 'RIAL', 'MCR', 'LUAL'])
 
         """
-        for x in self.neurons():
-            yield x.name()
+        n = P.Neuron()
+        self.neuron.set(n)
+        res = n.name.get()
+        self.neuron.unset(n)
+        return res
 
     def aneuron(self, name):
         """
@@ -104,12 +108,13 @@ class Network(DataObject):
         :rtype: iter(Neuron)
         """
 
-        # TODO: make sure these belong to *this* Network
         n = P.Neuron()
         n.type('sensory')
 
-        for x in n.load():
-            yield x
+        self.neuron.set(n)
+        res = list(n.load())
+        self.neuron.unset(n)
+        return res
 
     def interneurons(self):
         """
@@ -119,12 +124,13 @@ class Network(DataObject):
         :rtype: iter(Neuron)
         """
 
-        # TODO: make sure these belong to *this* Network
         n = P.Neuron()
         n.type('interneuron')
 
-        for x in n.load():
-            yield x
+        self.neuron.set(n)
+        res = list(n.load())
+        self.neuron.unset(n)
+        return res
 
     def motor(self):
         """
@@ -134,18 +140,19 @@ class Network(DataObject):
         :rtype: iter(Neuron)
         """
 
-        # TODO: make sure these belong to *this* Network
         n = P.Neuron()
         n.type('motor')
 
-        for x in n.load():
-            yield x
+        self.neuron.set(n)
+        res = list(n.load())
+        self.neuron.unset(n)
+        return res
 
     def identifier(self, *args, **kwargs):
         if super(Network, self).defined:
             return super(Network, self).identifier()
         else:
-            return self.make_identifier(self.worm.defined_values[0])
+            return self.make_identifier(self.worm.defined_values[0].identifier().n3())
 
     @property
     def defined(self):

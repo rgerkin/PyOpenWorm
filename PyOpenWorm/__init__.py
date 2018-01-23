@@ -65,7 +65,7 @@ import os
 
 # For re-export
 from .configure import Configure, Configureable, ConfigValue, BadConf
-from .data import Data, DataUser, propertyTypes
+from .data import Data, DataUser
 from .dataObject import DataObject
 from .pProperty import Property
 from .simpleProperty import SimpleProperty
@@ -80,7 +80,7 @@ from .quantity import Quantity
 from .my_neuroml import NeuroML
 from .connection import Connection
 from .experiment import Experiment
-from .channel import Channel
+from .channel import Channel, ExpressionPattern
 from .channelworm import ChannelModel, PatchClampExperiment
 from .plot import Plot
 
@@ -114,6 +114,7 @@ __all__ = [
     "Connection",
     "Experiment",
     "Channel",
+    "ExpressionPattern",
     "ChannelModel",
     "PatchClampExperiment",
     "Plot"]
@@ -241,13 +242,13 @@ def connect(configFile=False,
         loadConfig(configFile)
     else:
         Configureable.conf = Data({
-            "connectomecsv" : "OpenWormData/aux_data/connectome.csv",
-            "neuronscsv" : "OpenWormData/aux_data/neurons.csv",
-            "rdf.source" : "ZODB",
-            "rdf.store" : "ZODB",
-            "rdf.store_conf" : get_data('worm.db'),
-            "user.email" : "jerry@cn.com",
-            "rdf.upload_block_statement_count" : 50
+            "connectomecsv": "OpenWormData/aux_data/connectome.csv",
+            "neuronscsv": "OpenWormData/aux_data/neurons.csv",
+            "rdf.source": "ZODB",
+            "rdf.store": "ZODB",
+            "rdf.store_conf": get_data('worm.db'),
+            "user.email": "jerry@cn.com",
+            "rdf.upload_block_statement_count": 50
         })
 
     Configureable.conf.openDatabase()
@@ -268,9 +269,9 @@ def connect(configFile=False,
     Muscle.register()
     Connection.register()
     SimpleProperty.register()
-    Property.register()
     Relationship.register()
     Channel.register()
+    ExpressionPattern.register()
     ChannelModel.register()
     Experiment.register()
     PatchClampExperiment.register()
