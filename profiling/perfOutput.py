@@ -3,7 +3,7 @@ import cProfile
 import pstats
 
 if len(sys.argv) != 2:
-    print 'Performance data file required. You have ' + str(len(sys.argv) - 1) + ' arguments\n'
+    print('Performance data file required. You have ' + str(len(sys.argv) - 1) + ' arguments\n')
     sys.exit()
 else:
     stats = pstats.Stats(sys.argv[1])
