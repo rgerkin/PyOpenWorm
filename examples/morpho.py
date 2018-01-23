@@ -5,7 +5,7 @@ How to load morphologies of certain cells from the database.
 from __future__ import absolute_import
 from __future__ import print_function
 import PyOpenWorm as P
-import cStringIO as io
+import io as io
 
 #Connect to database.
 P.connect('default.conf')
